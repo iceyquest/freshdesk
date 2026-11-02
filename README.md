@@ -1,6 +1,6 @@
-# QueryFlow MVP
+# Freshdesk Workflow Demo
 
-A standalone, no-API prototype of an automated customer-query response workspace, inspired by the automated query-response case study in the portfolio.
+A standalone support-ticket workflow prototype. The interface uses sample tickets and local business rules; it is **not connected to a Freshdesk account**, is not affiliated with Freshworks, and does not send messages to customers.
 
 ## Run locally
 
@@ -12,12 +12,14 @@ python3 -m http.server 4173
 
 Then visit `http://localhost:4173`.
 
-## What works in this demo
+## Try the workflow
 
-- Browse, search, and filter sample customer conversations.
-- Generate a contextual reply suggestion from local rules; suggestions are editable and show a confidence/review cue.
-- Send a reply to resolve a conversation, resolve without replying, or reopen a resolved conversation.
-- Add a sample query and keep changes in browser `localStorage`.
-- Try the search shortcut `⌘ K` (or `Ctrl K`).
+- Search tickets and filter by all, open, or resolved.
+- Create a ticket with your own sample subject and message. The rule engine classifies it, selects a suggested support queue and priority, and writes an editable response draft.
+- Review the rule's confidence and rationale. Safety, account-security, legal, billing/refund, and unclear tickets are explicitly flagged for a human; the drafts avoid promising a refund or requesting passwords, one-time codes, or full payment details.
+- Edit and record a reply, resolve a ticket separately, or reopen a resolved ticket. Recorded replies and status changes persist in this browser only.
+- Regenerate the suggested reply or use `⌘ K` / `Ctrl K` to focus search.
 
-No customer data is sent anywhere and no AI provider or API key is used. Reply suggestions are deterministic demo templates, not an LLM; refund and account issues explicitly ask an agent to verify details.
+## Important limitation
+
+This is a deterministic rules demo, not an AI model and not a production Freshdesk integration. Tickets, queue assignments, replies, and status changes are stored in the browser's `localStorage`. No ticket data or reply is sent to Freshdesk or to a customer. Connecting a real account requires Freshdesk access and a separately hosted, authenticated backend to protect credentials; no API key belongs in this static site or its repository.

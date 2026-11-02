@@ -1,95 +1,121 @@
 const seedConversations = [
   {
     id: "q-1048", name: "Priya Menon", initials: "PM", avatar: "av-pink", email: "priya.menon@email.com",
-    subject: "Charged for subscription but still seeing ads", category: "Billing · Subscription", channel: "Email",
+    subject: "Charged for my plan but account still looks free", category: "Billing · Subscription", channel: "Email",
     time: "2m", date: "Today, 10:42 AM", priority: "High", status: "open", unread: true,
-    message: "Hi, I renewed my Pocket FM subscription this morning and the payment went through, but I'm still getting ads and locked episodes. Could you please check? The transaction ID is PF-782391.",
-    draft: "", reply: "", confidence: "high", intent: "Subscription access",
+    message: "Hi, I renewed my subscription this morning and the payment went through, but my account still looks like the free plan. Can you check what happened?",
+    draft: "", reply: "", replies: [], confidence: "medium", intent: "Subscription access",
   },
   {
     id: "q-1047", name: "Arjun Kapoor", initials: "AK", avatar: "av-orange", email: "arjun.k@email.com",
     subject: "Missing coins after watching an ad", category: "Coins · Rewards", channel: "In-app", time: "18m", date: "Today, 10:26 AM",
     priority: "Normal", status: "open", unread: true,
-    message: "I watched the full video ad to earn coins but they never showed up in my wallet. I tried restarting the app too. Can you help?",
+    message: "My reward credits never showed up after I completed the offer. I refreshed the app but the balance hasn't changed. Can you check?",
     draft: "", reply: "", confidence: "high", intent: "Reward not credited",
   },
   {
     id: "q-1046", name: "Meera Iyer", initials: "MI", avatar: "av-green", email: "meera.iyer@email.com",
-    subject: "Episode 42 won't play", category: "Playback · Listening", channel: "In-app", time: "34m", date: "Today, 10:10 AM",
+    subject: "The app closes when I open a recording", category: "Product · Technical issue", channel: "In-app", time: "34m", date: "Today, 10:10 AM",
     priority: "Normal", status: "open", unread: true,
-    message: "Every time I tap episode 42 of The Royal Secret, it loads for a few seconds and then says something went wrong. Other episodes seem fine.",
+    message: "The app closes every time I open a recording. I restarted my phone but it still happens. I can share my device details if that helps.",
     draft: "", reply: "", confidence: "high", intent: "Playback issue",
   },
   {
     id: "q-1045", name: "Rohan Das", initials: "RD", avatar: "av-blue", email: "rohan.das@email.com",
-    subject: "How do I change my language?", category: "Account · Preferences", channel: "Email", time: "1h", date: "Today, 9:44 AM",
+    subject: "How can I change my language preference?", category: "Product · How-to", channel: "Email", time: "1h", date: "Today, 9:44 AM",
     priority: "Normal", status: "open", unread: false,
-    message: "I'd like to see more Hindi audio stories in my recommendations. Where can I change my language preference?",
+    message: "I'd like to change the language used in the app. Where can I find that setting?",
     draft: "", reply: "", confidence: "high", intent: "Language preferences",
   },
   {
     id: "q-1044", name: "Ananya Rao", initials: "AR", avatar: "", email: "ananya.r@email.com",
     subject: "Requesting a refund for my plan", category: "Billing · Refunds", channel: "Email", time: "2h", date: "Today, 8:53 AM",
     priority: "High", status: "open", unread: true,
-    message: "I was charged for the annual plan by mistake. I meant to select monthly. Could you please refund this? I haven't used the subscription yet.",
+    message: "I was charged for the annual plan by mistake. I meant to select monthly. Could you review whether this charge is eligible for a refund?",
     draft: "", reply: "", confidence: "medium", intent: "Refund request",
   },
   {
     id: "q-1043", name: "Kabir Sethi", initials: "KS", avatar: "av-green", email: "kabir.s@email.com",
     subject: "Can't log in on my new phone", category: "Account · Login", channel: "In-app", time: "3h", date: "Today, 7:36 AM",
     priority: "Normal", status: "open", unread: false,
-    message: "I got a new phone and can't get into my account. I used Google sign-in before, but it keeps creating a new profile.",
+    message: "I can't access my account after changing phones. The sign-in flow keeps opening a different profile. Can you help me get back into the right one?",
     draft: "", reply: "", confidence: "medium", intent: "Account access",
   },
   {
     id: "q-1042", name: "Sana Khan", initials: "SK", avatar: "av-pink", email: "sana.k@email.com",
     subject: "Thanks for sorting out my downloads", category: "Playback · Downloads", channel: "In-app", time: "Yesterday", date: "Yesterday, 6:20 PM",
     priority: "Normal", status: "resolved", unread: false,
-    message: "My downloaded episodes were missing after I updated the app.",
-    draft: "", reply: "Hi Sana, thanks for reaching out. Re-downloading the episodes after an app update should make them available offline again. Glad we could help!", confidence: "high", intent: "Downloads",
+    message: "My saved files disappeared after I updated the app.",
+    draft: "", reply: "Hi Sana, I’m sorry your saved files disappeared after the update. Please let us know which device and app version you’re using so we can check the right recovery steps.", replies: [], confidence: "medium", intent: "Downloads",
   },
   {
     id: "q-1041", name: "Dev Patel", initials: "DP", avatar: "av-blue", email: "dev.p@email.com",
-    subject: "Where can I find my listening history?", category: "App · Discovery", channel: "Email", time: "Yesterday", date: "Yesterday, 4:18 PM",
+    subject: "Where can I find my activity history?", category: "Product · How-to", channel: "Email", time: "Yesterday", date: "Yesterday, 4:18 PM",
     priority: "Normal", status: "resolved", unread: false,
-    message: "I started a story last week and forgot the title. Is there a way to see what I was listening to?",
-    draft: "", reply: "Hi Dev, you can find your recently played stories in the Home tab under Continue Listening. Your progress is saved automatically.", confidence: "high", intent: "Listening history",
+    message: "I need to find an item I viewed earlier. Is there a way to see my recent activity?",
+    draft: "", reply: "Hi Dev, you can usually find recent activity from your account or history area. If you tell us which item you’re looking for, we can point you to the right place.", replies: [], confidence: "high", intent: "Product how-to",
   },
 ];
 
 const responseRules = [
   {
-    match: /subscription|charged|payment|ads|locked episode|premium/i, intent: "Subscription access", confidence: "high",
-    response: (name) => `Hi ${name}, thanks for letting us know — I’m sorry your subscription isn’t showing correctly. Please try tapping Restore Purchases in Profile → Settings → Subscription. If your access still hasn’t updated after a few minutes, reply with your app-store receipt and we’ll investigate the payment for you. We’ll get this sorted.`
+    intent: "Safety concern", category: "Safety · Escalate", queue: "Urgent human review", priority: "Urgent",
+    confidence: "low", reviewReason: "Safety-related language requires immediate human assessment.",
+    match: /\b(threat(?:ened)?|unsafe|safety concern|emergency|physical harm|hurt someone|someone hurt me)\b/i,
+    response: (name) => `Hi ${name}, I’m sorry this is happening. Your safety matters. If anyone is in immediate danger, please contact your local emergency services now. I’m escalating your message to a person on our support team for a prompt review.`,
   },
   {
-    match: /coin|reward|watch.*ad/i, intent: "Reward not credited", confidence: "high",
-    response: (name) => `Hi ${name}, sorry those coins didn’t appear after you watched the ad. Rewards can take a few minutes to sync. Please refresh your wallet once; if the coins are still missing, send us the approximate time you watched the ad and we’ll check the reward log.`
+    intent: "Account security", category: "Security · Account", queue: "Account security", priority: "Urgent",
+    confidence: "low", reviewReason: "Possible account compromise; do not request credentials or codes.",
+    match: /\b(account.{0,20}(?:hack(?:ed)?|compromis(?:ed|e))|(?:someone (?:has )?)?(?:hack(?:ed)?|compromis(?:ed|e)) my account|unauthori[sz]ed access|stolen account|phishing|data breach|security issue|someone (?:got|has) into my account)\b/i,
+    response: (name) => `Hi ${name}, I’m sorry you’re dealing with this. For your security, please don’t share your password or any one-time codes in this conversation. I’m referring this to our account-security team. If you can still access the account, use the official sign-in page to change your password and sign out of other sessions.`,
   },
   {
-    match: /playback|play|episode|load|buffer|audio|listen/i, intent: "Playback issue", confidence: "high",
-    response: (name) => `Hi ${name}, sorry you’re having trouble listening. Please check that you’re on the latest app version, then close and reopen the app and try that episode again. If it still doesn’t play, let us know your device model and app version so we can investigate.`
+    intent: "Legal or formal complaint", category: "Escalation · Complaint", queue: "Support lead", priority: "Urgent",
+    confidence: "low", reviewReason: "Legal, regulatory, or formal complaints need an authorized reviewer.",
+    match: /\b(lawyer|attorney|lawsuit|legal action|regulator|ombudsman|formal complaint|chargeback|payment dispute)\b/i,
+    response: (name) => `Hi ${name}, thank you for raising this. I’ve referred your message to a support lead for a careful review. We’ll review the details and follow up through this support channel. I can’t make a decision or promise an outcome before that review.`,
   },
   {
-    match: /language|hindi|recommendation|preference/i, intent: "Language preferences", confidence: "high",
-    response: (name) => `Hi ${name}, you can update your language preferences in Profile → Settings → Content Languages. Choose Hindi and save your changes; your recommendations will adjust as you listen to more stories in that language.`
+    intent: "Refund or cancellation", category: "Billing · Refund", queue: "Billing", priority: "High",
+    confidence: "medium", reviewReason: "Check the purchase record and applicable refund policy before deciding.",
+    match: /\b(refund|reimburse|cancel(?:lation)?|charged twice|double[- ]charged|duplicate charge|accidental charge|wrong plan|wrong amount)\b/i,
+    response: (name) => `Hi ${name}, I understand you’re asking about a charge or cancellation. Refund eligibility and cancellation steps depend on the purchase channel and account details, so I can’t promise an outcome before checking. Please reply with the order or transaction reference, the purchase date, and where you made the purchase. Please don’t include full payment-card details. I’m routing this to our billing team for review.`,
   },
   {
-    match: /refund|refunded|annual plan|monthly/i, intent: "Refund request", confidence: "medium",
-    response: (name) => `Hi ${name}, I understand the plan selection wasn’t what you intended. Refund eligibility depends on where the subscription was purchased. Please share your order or transaction ID and confirm whether you subscribed through the App Store, Google Play, or our website. Our billing team will review it — I can’t promise a refund before checking the purchase details.`
+    intent: "Payment or subscription access", category: "Billing · Subscription", queue: "Billing", priority: "High",
+    confidence: "medium", reviewReason: "Verify the transaction and account entitlement before confirming access.",
+    match: /\b(subscription|billing|payment|invoice|charged|purchase|paid plan|premium|renewal|receipt|access.{0,20}(?:paid|plan|purchase))\b/i,
+    response: (name) => `Hi ${name}, I’m sorry the payment and account access don’t match. Please confirm the email on the account, the purchase date, and the order or transaction reference. You can also try the product’s official restore-purchase option if the purchase was made through an app store. Please don’t send full card details. Our billing team needs to verify the transaction before confirming a fix.`,
   },
   {
-    match: /log.?in|login|account|google sign/i, intent: "Account access", confidence: "medium",
-    response: (name) => `Hi ${name}, sorry you’re having trouble accessing your account. On the sign-in screen, choose Continue with Google and use the same Google account you used on your old phone. Please don’t create a new account. If it still opens a different profile, reply with the email linked to your original account and we’ll help.`
+    intent: "Reward or credit missing", category: "Billing · Credits", queue: "Billing", priority: "Normal",
+    confidence: "medium", reviewReason: "Check the transaction or reward ledger before adjusting a balance.",
+    match: /\b(credits?|coins?|points?|reward|balance|wallet)\b/i,
+    response: (name) => `Hi ${name}, I’m sorry the credit hasn’t appeared. Please share what action you completed, the approximate time, and any non-sensitive reference shown in the app. I’ll have the team check the account and reward record before making any balance changes. Please don’t send passwords or payment-card details.`,
   },
   {
-    match: /download|offline/i, intent: "Downloads", confidence: "high",
-    response: (name) => `Hi ${name}, sorry your downloads disappeared. App updates can sometimes remove locally stored episodes. Please open your Library and download the episodes again while connected to Wi-Fi. Your listening progress will remain saved.`
+    intent: "Account access", category: "Account · Access", queue: "Account support", priority: "Normal",
+    confidence: "medium", reviewReason: "Verify account ownership through approved support procedures.",
+    match: /\b(log ?in|sign ?in|locked out|can't access|cannot access|account access|change.{0,12}email|new phone|verification code|one[- ]time code|password)\b/i,
+    response: (name) => `Hi ${name}, I’m sorry you’re having trouble accessing your account. Please tell us the sign-in method you normally use and the exact error you see. For your security, never share your password or one-time verification code here. Our account team can help verify ownership through the approved recovery process.`,
+  },
+  {
+    intent: "Technical issue", category: "Product · Technical", queue: "Technical support", priority: "Normal",
+    confidence: "medium", reviewReason: "Need product and reproduction details to diagnose accurately.",
+    match: /\b(error|bug|crash|crashing|not working|doesn't work|does not work|won't open|will not open|loading|stuck|slow|freeze|freezes|playback|download|recording|upload|sync)\b/i,
+    response: (name) => `Hi ${name}, I’m sorry you’ve run into this. Please try closing and reopening the app or page, then check whether an update is available. If it continues, reply with your device and operating-system version, the app or browser version, what you were doing just before it happened, and any error text. Please remove passwords, codes, and other sensitive information from screenshots.`,
+  },
+  {
+    intent: "Product how-to", category: "Product · How-to", queue: "Customer support", priority: "Normal",
+    confidence: "high", reviewReason: "",
+    match: /\b(how (?:do|can|to)|where (?:do|can)|setting|settings|change.{0,20}(?:language|preference|notification)|find my|how to)\b/i,
+    response: (name) => `Hi ${name}, thanks for reaching out. I’d be happy to point you in the right direction. Which product or feature are you using, and what are you trying to change or find? I want to make sure I share the correct steps for your setup.`,
   },
 ];
 
 const state = {
-  conversations: loadConversations(),
+  conversations: prepareConversations(loadConversations()),
   filter: "all",
   query: "",
   selectedId: null,
@@ -98,11 +124,58 @@ const state = {
 const itemContainer = document.querySelector("#conversation-items");
 const detailContainer = document.querySelector("#conversation-detail");
 const toast = document.querySelector("#toast");
+const ticketDialog = document.querySelector("#ticket-dialog");
 let toastTimer;
+
+function classifyTicket(ticket) {
+  const content = `${ticket.subject} ${ticket.message}`;
+  const rule = responseRules.find((candidate) => candidate.match.test(content));
+  const firstName = ticket.name.trim().split(/\s+/)[0] || "there";
+  if (!rule) {
+    return {
+      intent: "Needs review",
+      category: "Unclassified · Review",
+      queue: "Customer support",
+      priority: "Normal",
+      confidence: "low",
+      reviewReason: "No confident topic match; confirm the issue before advising.",
+      draft: `Hi ${firstName}, thanks for contacting us. I want to make sure we give you the right help. Could you tell us which product or service this is about, what you expected to happen, and what happened instead? Please leave out passwords, one-time codes, and full payment details. A support agent will review your message.`,
+      analysisVersion: 2,
+    };
+  }
+  return {
+    intent: rule.intent,
+    category: rule.category,
+    queue: rule.queue,
+    priority: rule.priority,
+    confidence: rule.confidence,
+    reviewReason: rule.reviewReason,
+    draft: rule.response(firstName),
+    analysisVersion: 2,
+  };
+}
+
+function prepareConversations(conversations) {
+  return conversations.map((ticket) => {
+    const replies = Array.isArray(ticket.replies)
+      ? ticket.replies
+      : ticket.reply
+        ? [{ text: ticket.reply, date: ticket.date || "Previously" }]
+        : [];
+    if (ticket.analysisVersion === 2) return { ...ticket, replies };
+    const analysis = classifyTicket(ticket);
+    return {
+      ...ticket,
+      ...analysis,
+      replies,
+      draft: ticket.status === "resolved" ? (ticket.draft || "") : analysis.draft,
+    };
+  });
+}
 
 function loadConversations() {
   try {
-    const stored = localStorage.getItem("queryflow-conversations");
+    const stored = localStorage.getItem("freshdesk-demo-tickets");
     if (!stored) return structuredClone(seedConversations);
     const parsed = JSON.parse(stored);
     if (!Array.isArray(parsed) || parsed.some((item) => typeof item.id !== "string" || typeof item.message !== "string")) {
@@ -117,7 +190,7 @@ function loadConversations() {
 
 function saveConversations() {
   try {
-    localStorage.setItem("queryflow-conversations", JSON.stringify(state.conversations));
+    localStorage.setItem("freshdesk-demo-tickets", JSON.stringify(state.conversations));
   } catch (error) {
     console.error("Could not save conversations:", error);
     showToast("Changes are only saved for this session.");
@@ -135,6 +208,8 @@ function getCounts() {
     all: state.conversations.length,
     open: state.conversations.filter((item) => item.status === "open").length,
     resolved: state.conversations.filter((item) => item.status === "resolved").length,
+    review: state.conversations.filter((item) => item.status === "open" && (item.confidence === "low" || item.reviewReason)).length,
+    replies: state.conversations.reduce((total, item) => total + (item.replies?.length || (item.reply ? 1 : 0)), 0),
   };
 }
 
@@ -147,6 +222,9 @@ function updateCounts() {
   document.querySelector("#tab-open-count").textContent = counts.open;
   document.querySelector("#inbox-nav-count").textContent = counts.open;
   document.querySelector("#open-metric").textContent = counts.open;
+  document.querySelector("#review-metric").textContent = counts.review;
+  document.querySelector("#reply-metric").textContent = counts.replies;
+  document.querySelector("#resolved-metric").textContent = counts.resolved;
   document.querySelector("#visible-count").textContent = visibleConversations().length;
 }
 
@@ -170,7 +248,7 @@ function renderList() {
     <button class="conversation-item ${item.id === state.selectedId ? "selected" : ""}" type="button" data-id="${escapeHtml(item.id)}" aria-pressed="${item.id === state.selectedId}">
       <span class="customer-avatar ${escapeHtml(item.avatar)}">${escapeHtml(item.initials)}</span>
       <span class="item-main">
-        <span class="item-title-row"><span class="item-name">${escapeHtml(item.name)}</span>${item.priority === "High" ? '<span class="priority-mark" title="High priority">▲</span>' : ""}</span>
+        <span class="item-title-row"><span class="item-name">${escapeHtml(item.name)}</span>${item.priority === "High" || item.priority === "Urgent" ? `<span class="priority-mark" title="${escapeHtml(item.priority)} priority">▲</span>` : ""}</span>
         <span class="item-category">${escapeHtml(item.subject)}</span>
         <span class="item-preview">${escapeHtml(item.reply || item.message)}</span>
       </span>
@@ -189,7 +267,8 @@ function renderDetail() {
     return;
   }
   const isResolved = item.status === "resolved";
-  const hasReply = Boolean(item.reply);
+  const replies = item.replies || (item.reply ? [{ text: item.reply, date: item.date }] : []);
+  const hasReply = replies.length > 0;
   const composerText = item.draft || "";
   const confidenceClass = item.confidence === "low" ? "low" : item.confidence === "medium" ? "medium" : "";
   const confidenceLabel = item.confidence === "low" ? "Review suggested" : item.confidence === "medium" ? "Check details" : "High confidence";
@@ -209,13 +288,13 @@ function renderDetail() {
         <div><h2>${escapeHtml(item.subject)}</h2><div class="case-subtitle">#${escapeHtml(item.id.replace("q-", ""))} · ${escapeHtml(item.date)}</div></div>
         <span class="status-pill ${isResolved ? "resolved" : "open"}">${isResolved ? "Resolved" : "Open"}</span>
       </div>
-      ${item.priority === "High" ? '<span class="priority-pill high">▲ &nbsp;High priority</span>' : ""}
-      <div class="case-tags"><span class="case-tag">${escapeHtml(item.category)}</span><span class="case-tag">${escapeHtml(item.intent || "Unclassified")}</span></div>
+      ${item.priority === "High" || item.priority === "Urgent" ? `<span class="priority-pill ${item.priority === "Urgent" ? "urgent" : "high"}">▲ &nbsp;${escapeHtml(item.priority)} priority</span>` : ""}
+      <div class="case-tags"><span class="case-tag">${escapeHtml(item.category || "Unclassified")}</span><span class="case-tag">${escapeHtml(item.intent || "Unclassified")}</span><span class="case-tag queue-tag">→ ${escapeHtml(item.queue || "Customer support")}</span></div>
       <div class="message-divider">Today</div>
       <div class="message-author"><span class="customer-avatar ${escapeHtml(item.avatar)}">${escapeHtml(item.initials)}</span><span>${escapeHtml(item.name)}</span><span>· ${escapeHtml(item.time)} ago</span></div>
       <div class="message-bubble">${escapeHtml(item.message)}</div>
       <div class="customer-message-time">${escapeHtml(item.channel)} · ${escapeHtml(item.date)}</div>
-      ${hasReply ? `<div class="reply-message"><div class="message-author"><span>Gaurav Sharma</span><span>· ${escapeHtml(item.status === "resolved" ? "Replied" : "Draft sent")}</span></div><div class="reply-bubble">${escapeHtml(item.reply)}</div><span class="reply-time">${escapeHtml(item.status === "resolved" ? "Sent just now" : "Sent")}</span></div>` : ""}
+      ${hasReply ? replies.map((reply) => `<div class="reply-message"><div class="message-author"><span>Gaurav Sharma</span><span>· Reply</span></div><div class="reply-bubble">${escapeHtml(reply.text)}</div><span class="reply-demo-label">Demo only · not sent to customer</span><span class="reply-time">${escapeHtml(reply.date || "Recorded locally")}</span></div>`).join("") : ""}
     </div>
     ${isResolved ? `
       <div class="reply-composer">
@@ -226,14 +305,14 @@ function renderDetail() {
       <div class="reply-composer">
         <div class="automation-banner">
           <span class="automation-spark">✳</span>
-          <span class="automation-copy"><strong>AI reply suggestion <span class="draft-label">DEMO</span></strong><span>Rule-based demo suggestion for <b>${escapeHtml(item.intent || "customer query")}</b>. Review before sending.</span></span>
+          <span class="automation-copy"><strong>Suggested response <span class="draft-label">RULE-BASED</span></strong><span><b>${escapeHtml(item.intent || "customer query")}</b> · Route to ${escapeHtml(item.queue || "Customer support")}.${item.reviewReason ? ` ${escapeHtml(item.reviewReason)}` : " Check the details before replying."}</span></span>
           <span class="confidence ${confidenceClass}">${confidenceLabel}</span>
         </div>
-        <div class="composer-label-row"><span class="composer-label"><span class="spark">✳</span> Reply</span><span class="draft-label">EDIT BEFORE SENDING</span></div>
+        <div class="composer-label-row"><span class="composer-label"><span class="spark">✳</span> Reply draft</span><span class="draft-label">EDIT BEFORE RECORDING</span></div>
         <textarea class="reply-textarea" id="reply-textarea" placeholder="Write a reply or generate a suggested response..." aria-label="Reply to customer">${escapeHtml(composerText)}</textarea>
         <div class="composer-actions">
-          <div class="composer-tools"><button type="button" data-action="regenerate" aria-label="Generate reply" title="Generate reply">✳</button><button type="button" data-action="insert-greeting" aria-label="Insert greeting" title="Insert greeting">Aa</button><span class="composer-hint">Suggestions are demo-only; verify account details.</span></div>
-          <div class="reply-buttons"><button class="resolve-button" type="button" data-action="resolve">Resolve</button><button class="send-button" type="button" data-action="send" ${composerText.trim() ? "" : "disabled"}>Send reply ↗</button></div>
+          <div class="composer-tools"><button type="button" data-action="regenerate" aria-label="Regenerate suggestion" title="Regenerate suggestion">✳</button><button type="button" data-action="insert-greeting" aria-label="Insert greeting" title="Insert greeting">Aa</button><span class="composer-hint">Local demo only — never sent to Freshdesk.</span></div>
+          <div class="reply-buttons"><button class="resolve-button" type="button" data-action="resolve">Resolve</button><button class="send-button" type="button" data-action="send" ${composerText.trim() ? "" : "disabled"}>Record reply ↗</button></div>
         </div>
       </div>
     `}
@@ -253,16 +332,7 @@ function renderDetail() {
 }
 
 function createDraft(item) {
-  const rule = responseRules.find((candidate) => candidate.match.test(`${item.subject} ${item.message}`));
-  if (!rule) {
-    item.intent = "Needs review";
-    item.confidence = "low";
-    item.draft = `Hi ${item.name.split(" ")[0]}, thanks for reaching out. I want to make sure we give you the right help. Could you share a little more detail about what happened and any relevant order or account reference? Our support team will take a closer look.`;
-  } else {
-    item.intent = rule.intent;
-    item.confidence = rule.confidence;
-    item.draft = rule.response(item.name.split(" ")[0]);
-  }
+  Object.assign(item, classifyTicket(item));
   item.unread = false;
   saveConversations();
   renderList();
@@ -290,14 +360,15 @@ function handleAction(action, item) {
       showToast("Write a reply before sending.");
       return;
     }
+    item.replies = item.replies || [];
+    item.replies.push({ text, date: "Recorded just now" });
     item.reply = text;
     item.draft = "";
-    item.status = "resolved";
     item.unread = false;
     saveConversations();
     renderList();
     renderDetail();
-    showToast("Reply sent and conversation resolved.");
+    showToast("Reply recorded locally — not sent to a customer.");
     return;
   }
   if (action === "resolve") {
@@ -373,20 +444,56 @@ document.querySelector("#search-input").addEventListener("input", (event) => {
 });
 
 document.querySelector("#new-query-button").addEventListener("click", () => {
+  ticketDialog.showModal();
+  ticketDialog.querySelector('[name="name"]').focus();
+});
+
+function closeTicketDialog() {
+  ticketDialog.close();
+  document.querySelector("#ticket-form").reset();
+}
+
+document.querySelector("#close-ticket-dialog").addEventListener("click", closeTicketDialog);
+document.querySelector("#cancel-ticket").addEventListener("click", closeTicketDialog);
+
+document.querySelector("#ticket-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.currentTarget);
+  const name = String(formData.get("name")).trim();
+  const email = String(formData.get("email")).trim();
+  const subject = String(formData.get("subject")).trim();
+  const message = String(formData.get("message")).trim();
+  if (!name || !email || !subject || !message) return;
+
   const nextId = Math.max(1040, ...state.conversations.map((item) => Number(item.id.replace(/^q-/, "")) || 0)) + 1;
-  const newItem = {
-    id: `q-${nextId}`, name: "Alex Morgan", initials: "AM", avatar: "av-blue",
-    email: "alex.morgan@example.com", subject: "Question about my account", category: "Account · General",
-    channel: "In-app", time: "now", date: "Today, just now", priority: "Normal", status: "open", unread: true,
-    message: "I have a question about my account and could use some help. Can someone get back to me?",
-    draft: "", reply: "", confidence: "low", intent: "Needs review",
+  const initials = name.split(/\s+/).slice(0, 2).map((part) => part[0]).join("").toUpperCase();
+  const ticket = {
+    id: `q-${nextId}`,
+    name,
+    initials,
+    avatar: ["av-blue", "av-green", "av-orange", "av-pink"][nextId % 4],
+    email,
+    subject,
+    category: "New ticket",
+    channel: "Web form",
+    time: "now",
+    date: new Date().toLocaleString(),
+    priority: "Normal",
+    status: "open",
+    unread: true,
+    message,
+    draft: "",
+    reply: "",
+    replies: [],
   };
-  state.conversations.unshift(newItem);
+  Object.assign(ticket, classifyTicket(ticket));
+  state.conversations.unshift(ticket);
   state.query = "";
   document.querySelector("#search-input").value = "";
+  closeTicketDialog();
   setFilter("all");
-  selectConversation(newItem.id);
-  showToast("Sample query added to your inbox.");
+  selectConversation(ticket.id);
+  showToast(`Ticket classified as ${ticket.intent}. Suggested reply is ready to review.`);
 });
 
 document.addEventListener("keydown", (event) => {
@@ -403,5 +510,8 @@ document.addEventListener("keydown", (event) => {
 });
 
 state.selectedId = visibleConversations()[0]?.id || null;
+document.querySelector("#today-label").textContent = new Intl.DateTimeFormat(undefined, {
+  weekday: "long", month: "long", day: "numeric",
+}).format(new Date());
 renderList();
 renderDetail();

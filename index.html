@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f6f7f9">
-    <title>QueryFlow — Support workspace</title>
+    <title>Freshdesk — Support workspace demo</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <div class="app-shell">
       <aside class="sidebar">
-        <a class="brand" href="#" aria-label="QueryFlow home">
-          <span class="brand-mark" aria-hidden="true">q</span>
-          <span>queryflow</span>
+        <a class="brand" href="#" aria-label="Freshdesk demo home">
+          <span class="brand-mark" aria-hidden="true">f</span>
+          <span>freshdesk</span>
         </a>
 
         <div class="workspace-switcher">
-          <span class="workspace-avatar">P</span>
-          <span class="workspace-name"><strong>Pocket FM</strong><small>Support workspace</small></span>
+          <span class="workspace-avatar">S</span>
+          <span class="workspace-name"><strong>Sample Support</strong><small>Demo workspace</small></span>
           <span class="chevron" aria-hidden="true">⌄</span>
         </div>
 
@@ -50,7 +50,7 @@
             <span><strong>Gaurav Sharma</strong><small>Admin</small></span>
             <span class="chevron" aria-hidden="true">⌄</span>
           </div>
-          <div class="sidebar-foot"><span class="online-dot"></span> All systems operational</div>
+          <div class="sidebar-foot"><span class="online-dot"></span> Demo workspace · offline</div>
         </div>
       </aside>
 
@@ -58,7 +58,7 @@
         <header class="topbar">
           <div class="breadcrumbs"><span>Workspace</span><span class="crumb-separator">/</span><strong>Inbox</strong></div>
           <div class="topbar-actions">
-            <span class="today-label">Monday, 2 November</span>
+            <span class="today-label" id="today-label"></span>
             <button type="button" class="help-button" aria-label="Help">?</button>
             <button type="button" class="notification-button" aria-label="Notifications">♧<i></i></button>
           </div>
@@ -66,33 +66,35 @@
 
         <section class="inbox-header">
           <div>
-            <div class="eyebrow"><span class="status-pulse"></span> LIVE INBOX</div>
+            <div class="eyebrow"><span class="status-pulse"></span> SUPPORT WORKSPACE</div>
             <h1>Good morning, Gaurav <span class="wave">✦</span></h1>
             <p class="subtitle">Here’s what’s happening with your customer conversations today.</p>
           </div>
-          <button type="button" class="primary-button" id="new-query-button"><span aria-hidden="true">＋</span> Add sample query</button>
+          <button type="button" class="primary-button" id="new-query-button"><span aria-hidden="true">＋</span> New ticket</button>
         </section>
+
+        <div class="connection-notice"><span>DEMO MODE</span> Sample tickets only. Replies and status changes are saved in this browser; nothing is sent to Freshdesk or to customers.</div>
 
         <section class="metrics" aria-label="Inbox overview">
           <article class="metric-card">
-            <div class="metric-top"><span>Open conversations</span><span class="metric-icon purple-icon">▤</span></div>
+            <div class="metric-top"><span>Open tickets</span><span class="metric-icon purple-icon">▤</span></div>
             <div class="metric-value" id="open-metric">5</div>
-            <div class="metric-note"><span class="trend-up">↓ 18%</span> vs. last week</div>
+            <div class="metric-note">Waiting for an agent reply</div>
           </article>
           <article class="metric-card">
-            <div class="metric-top"><span>Avg. first response</span><span class="metric-icon mint-icon">◷</span></div>
-            <div class="metric-value">2<span class="metric-unit">m</span> 14<span class="metric-unit">s</span></div>
-            <div class="metric-note"><span class="trend-up">↓ 42%</span> vs. last week</div>
+            <div class="metric-top"><span>Replies recorded</span><span class="metric-icon mint-icon">↗</span></div>
+            <div class="metric-value" id="reply-metric">0</div>
+            <div class="metric-note">Local demo activity</div>
           </article>
           <article class="metric-card">
-            <div class="metric-top"><span>Resolved by automation</span><span class="metric-icon orange-icon">✳</span></div>
-            <div class="metric-value">68<span class="metric-percent">%</span></div>
-            <div class="metric-note"><span class="trend-up">↑ 12%</span> vs. last week</div>
+            <div class="metric-top"><span>Needs human review</span><span class="metric-icon orange-icon">⚑</span></div>
+            <div class="metric-value" id="review-metric">3</div>
+            <div class="metric-note">Sensitive or unclear tickets</div>
           </article>
           <article class="metric-card satisfaction-card">
-            <div class="metric-top"><span>Customer satisfaction</span><span class="metric-icon blue-icon">♡</span></div>
-            <div class="metric-value">4.8<span class="metric-unit">/5</span></div>
-            <div class="metric-note"><span class="stars">★★★★★</span> from 126 ratings</div>
+            <div class="metric-top"><span>Resolved tickets</span><span class="metric-icon blue-icon">✓</span></div>
+            <div class="metric-value" id="resolved-metric">3</div>
+            <div class="metric-note">Resolved in this browser</div>
           </article>
         </section>
 
@@ -113,15 +115,29 @@
               <button type="button" class="tab" data-filter="resolved" role="tab" aria-selected="false">Resolved</button>
             </div>
             <div class="conversation-items" id="conversation-items" aria-live="polite"></div>
-            <div class="list-footer"><span class="mini-spark">✳</span> AI has drafted <strong>12 replies</strong> today</div>
+            <div class="list-footer"><span class="mini-spark">✳</span> Suggested replies are <strong>agent-reviewed</strong></div>
           </div>
 
           <div class="conversation-detail" id="conversation-detail"></div>
         </section>
-        <footer class="app-footer"><span>QueryFlow</span> <span>·</span> MVP demo · Sample data stays in this browser</footer>
+        <footer class="app-footer"><span>Freshdesk workflow demo</span> <span>·</span> Not connected to a Freshdesk account · Replies stay in this browser</footer>
       </main>
     </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <dialog class="ticket-dialog" id="ticket-dialog" aria-labelledby="ticket-dialog-title">
+      <form id="ticket-form" method="dialog">
+        <div class="dialog-heading">
+          <div><span class="eyebrow">SAMPLE WORKSPACE</span><h2 id="ticket-dialog-title">Create a ticket</h2></div>
+          <button type="button" class="detail-icon-button" id="close-ticket-dialog" aria-label="Close dialog">×</button>
+        </div>
+        <p class="dialog-note">Try a billing, account, product issue, or any message to see how the reply rules respond.</p>
+        <label class="form-field">Customer name<input name="name" required maxlength="80" placeholder="e.g. Alex Morgan"></label>
+        <label class="form-field">Customer email<input name="email" type="email" required maxlength="160" placeholder="alex@example.com"></label>
+        <label class="form-field">Subject<input name="subject" required maxlength="140" placeholder="What does the customer need help with?"></label>
+        <label class="form-field">Customer message<textarea name="message" required maxlength="3000" rows="5" placeholder="Paste or write the ticket message..."></textarea></label>
+        <div class="dialog-actions"><button type="button" class="resolve-button" id="cancel-ticket">Cancel</button><button type="submit" class="send-button">Classify &amp; draft reply</button></div>
+      </form>
+    </dialog>
     <script src="app.js"></script>
   </body>
 </html>

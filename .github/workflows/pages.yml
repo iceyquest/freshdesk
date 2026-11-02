@@ -1,4 +1,4 @@
-name: Deploy QueryFlow to GitHub Pages
+name: Deploy Freshdesk Workflow Demo to GitHub Pages
 
 on:
   push:
